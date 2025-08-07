@@ -1,315 +1,468 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowRight, Star, Users, Globe, Award, CheckCircle, Truck, Shield, Play } from 'lucide-react';
-import api from '../services/api';
+import React, { useState, useEffect } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { ChevronDown, Phone, Mail, MapPin, Check, Truck, Shield, Clock, Users, Globe, Award, Factory } from 'lucide-react';
+import HandImg from '../assets/images/Hand.png';
+import H2H from '../assets/images/H2H.jpg';
+import TruckImg from '../assets/images/Truck.png';
+import cutImg from '../assets/images/cutting.jpg';
 
-interface Product {
-  _id: string;
-  name: string;
-  description: string;
-  price: number;
-  currency: string;
-  image: string;
-  category: string;
-  unit: string;
-  availableQuantity: number;
-}
-
-const HomePage = () => {
-  const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
-
+const KSAgriHomepage = () => {
+  const [scrollY, setScrollY] = useState(0);
+  
   useEffect(() => {
-    const fetchFeaturedProducts = async () => {
-      try {
-        const response = await api.get('/products/featured?limit=6');
-        setFeaturedProducts(response.data.data);
-      } catch (error) {
-        console.error('Error fetching featured products:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchFeaturedProducts();
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const stats = [
-    { label: 'Years of Excellence', value: '16+', icon: Award },
-    { label: 'Happy Clients', value: '500+', icon: Users },
-    { label: 'Countries Served', value: '25+', icon: Globe },
-    { label: 'Products Exported', value: '1000+', icon: Truck },
-  ];
+  // Animated counter component
+  interface AnimatedCounterProps {
+    end: number;
+    label: string;
+    duration?: number;
+  }
 
-  const services = [
-    {
-      title: 'Premium Quality Control',
-      description: 'Rigorous standards for the finest products.',
-      icon: Shield,
-    },
-    {
-      title: 'Sustainable Farming',
-      description: 'Eco-friendly practices for communities and nature.',
-      icon: CheckCircle,
-    },
-    {
-      title: 'Global Logistics',
-      description: 'Efficient shipping for timely deliveries.',
-      icon: Truck,
-    },
-    {
-      title: 'Export Excellence',
-      description: 'Certified export solutions worldwide.',
-      icon: Award,
-    },
-  ];
+  const AnimatedCounter: React.FC<AnimatedCounterProps> = ({ end, label, duration = 2000 }) => {
+    const [count, setCount] = useState(0);
+    const [hasAnimated, setHasAnimated] = useState(false);
 
-  const testimonials = [
-    {
-      name: 'Sarah Johnson',
-      company: 'Fresh Foods Import Ltd',
-      country: 'United Kingdom',
-      content: 'KS AGRI has been our trusted partner for over 5 years. Their consistent quality and reliable service have made them indispensable.',
-      rating: 5,
-    },
-    {
-      name: 'Michael Chen',
-      company: 'Asian Grocers Network',
-      country: 'Singapore',
-      content: 'Exceptional coconut products that boosted our business significantly.',
-      rating: 5,
-    },
-    {
-      name: 'Ahmed Al-Rashid',
-      company: 'Gulf Trading Company',
-      country: 'UAE',
-      content: 'Professional, competitive, and top-quality service.',
-      rating: 5,
-    },
-  ];
+    useEffect(() => {
+      if (hasAnimated) return;
+      
+      const timer = setTimeout(() => {
+        setHasAnimated(true);
+        let start = 0;
+        const increment = end / (duration / 16);
+        const counter = setInterval(() => {
+          start += increment;
+          if (start >= end) {
+            setCount(end);
+            clearInterval(counter);
+          } else {
+            setCount(Math.floor(start));
+          }
+        }, 16);
+      }, 500);
+
+      return () => clearTimeout(timer);
+    }, [hasAnimated, end, duration]);
+
+    return (
+      <motion.div 
+        className="text-center"
+        initial={{ y: 50, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        onViewportEnter={() => !hasAnimated && setHasAnimated(true)}
+      >
+        <div className="text-4xl md:text-6xl font-bold text-green-600 mb-2">
+          {count}+
+        </div>
+        <div className="text-sm md:text-base text-gray-700 font-medium uppercase tracking-wide">
+          {label}
+        </div>
+      </motion.div>
+    );
+  };
+
+  // Image slider
+  const images = [HandImg, H2H, TruckImg, cutImg];
+  const [currentImage, setCurrentImage] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % images.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const goToNext = () => setCurrentImage((prev) => (prev + 1) % images.length);
+  const goToPrev = () => setCurrentImage((prev) => (prev - 1 + images.length) % images.length);
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans text-gray-800">
+    <div className="min-h-screen bg-white overflow-x-hidden">
+      
       {/* Hero Section */}
       <section 
-        id="home" 
-        className="relative h-screen bg-cover bg-center flex items-center overflow-hidden"
+        className="relative h-screen bg-cover bg-center bg-fixed flex items-center"
         style={{
-          backgroundImage: 'linear-gradient(135deg, rgba(0, 40, 20, 0.5), rgba(0, 80, 40, 0.5)), url("https://images.pexels.com/photos/974314/pexels-photo-974314.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop")'
+          backgroundImage: `url(${images[currentImage]})`
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-green-900/50 to-green-700/50"></div>
-        <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <Globe className="text-orange-400" size={24} />
-            <span className="text-orange-400 font-semibold uppercase tracking-wide">Premium Exports</span>
-          </div>
-          <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-6 leading-tight">
-            Fresh Tropical
-            <br />
-            <span className="text-orange-300">Fruits & Veggies</span>
-          </h1>
-          <p className="text-lg md:text-xl text-gray-100 mb-8 max-w-2xl mx-auto leading-relaxed">
-            Exporting top-quality cassava, papaya, and coconuts from Sri Lanka to the world.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
-            <Link
-              to="/products"
-              className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-full font-medium flex items-center gap-2 transition-all duration-300 hover:shadow-lg"
-            >
-              Explore Products
-              <ArrowRight size={18} />
-            </Link>
-            <Link
-              to="/contact"
-              className="border-2 border-white hover:bg-white hover:text-green-800 text-white px-6 py-3 rounded-full font-medium flex items-center gap-2 transition-all duration-300"
-            >
-              <Play size={18} />
-              Watch Video
-            </Link>
-          </div>
-          <div className="grid grid-cols-3 gap-6 max-w-lg mx-auto">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-orange-300">25+</div>
-              <div className="text-sm text-gray-200">Countries</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-orange-300">16+</div>
-              <div className="text-sm text-gray-200">Years</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-orange-300">100%</div>
-              <div className="text-sm text-gray-200">Quality</div>
-            </div>
-          </div>
-        </div>
-        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2">
-          <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-white rounded-full mt-2 animate-bounce"></div>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            {stats.map((stat, index) => (
-              <div key={index} className="p-6 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-all duration-300">
-                <div className="flex justify-center mb-4">
-                  <div className="bg-green-100 rounded-full p-3">
-                    <stat.icon className="h-6 w-6 text-green-600" />
-                  </div>
-                </div>
-                <div className="text-3xl font-bold text-gray-900 mb-1">{stat.value}</div>
-                <div className="text-gray-600 text-sm">{stat.label}</div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/60"></div>
+        
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+          {/* Company Logo */}
+          <motion.div 
+            className="mb-8 pt-20"
+            initial={{ y: -50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1, delay: 0.2 }}
+          >
+            <div className="flex items-center justify-center gap-4 mb-4">
+              {/* <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl">
+                <span className="text-green-600 font-bold text-3xl">KS</span>
+              </div> */}
+              <div className="text-left">
+                {/* <h1 className="text-2xl md:text-4xl font-bold">KS AGRI (PVT) LTD</h1> */}
+                <p className="text-green-200 text-sm md:text-base uppercase tracking-wider">Premium Agricultural Exports</p>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            </div>
+          </motion.div>
 
-      {/* Services Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Why Choose Us?</h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Blending tradition with innovation for global agricultural excellence.
+          {/* Hero Tagline - Multi-line like CR Exports */}
+          <motion.div
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1, delay: 0.5 }}
+            className="mb-8"
+          >
+            <h2 className="text-4xl md:text-7xl font-bold leading-tight mb-6">
+              <div className="mb-2">EXTENDING ROOTS</div>
+              <div className="text-3xl md:text-5xl text-green-400">IN GLOBAL AGRICULTURE</div>
+            </h2>
+            
+            <div className="w-24 h-1 bg-green-500 mx-auto mb-8"></div>
+            
+            <p className="text-lg md:text-2xl max-w-4xl mx-auto leading-relaxed text-gray-200">
+              Established with a vision to connect Sri Lankan agricultural excellence to global markets, 
+              KS AGRI has become a trusted source of premium tropical fruits and vegetables from the pearl of the Indian Ocean.
             </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {services.map((service, index) => (
-              <div key={index} className="bg-white p-5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
-                <div className="bg-green-50 rounded-lg p-4 mb-4 flex justify-center">
-                  <service.icon className="h-7 w-7 text-green-600" />
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">{service.title}</h3>
-                <p className="text-gray-600 text-sm leading-snug">{service.description}</p>
-              </div>
-            ))}
+          </motion.div>
+
+          {/* Call to Action */}
+          <motion.div
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1, delay: 0.8 }}
+            className="mb-12"
+          >
+            <button className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-2xl">
+              EXPLORE OUR PRODUCTS
+            </button>
+          </motion.div>
+
+          {/* Scroll Indicator */}
+          <motion.div 
+            className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            <ChevronDown className="w-8 h-8 text-white" />
+          </motion.div>
+
+          {/* Manual Controls */}
+          <div className="absolute left-4 bottom-4 flex gap-2 z-20">
+            <button onClick={goToPrev} className="bg-white/70 hover:bg-white text-black px-3 py-1 rounded">Prev</button>
+            <button onClick={goToNext} className="bg-white/70 hover:bg-white text-black px-3 py-1 rounded">Next</button>
           </div>
         </div>
       </section>
 
-      {/* Featured Products */}
+      {/* Stats Section - Like CR Exports */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <AnimatedCounter end={150} label="shipments a month" />
+            <AnimatedCounter end={75} label="hardworking employee base" />
+            <AnimatedCounter end={16} label="years of experience & knowledge" />
+            <AnimatedCounter end={2000} label="farmers involved in production" />
+          </div>
+        </div>
+      </section>
+
+      {/* About Section - Mirroring CR Exports layout */}
       <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Featured Products</h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Premium Sri Lankan produce, crafted for international markets.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {loading ? (
-              [...Array(6)].map((_, index) => (
-                <div key={index} className="bg-gray-100 rounded-xl shadow-md overflow-hidden animate-pulse">
-                  <div className="h-48 bg-gray-300" />
-                  <div className="p-4">
-                    <div className="h-4 bg-gray-300 rounded mb-2" />
-                    <div className="h-4 bg-gray-300 rounded mb-3 w-2/3" />
-                    <div className="h-5 bg-gray-300 rounded w-1/3" />
-                  </div>
-                </div>
-              ))
-            ) : (
-              featuredProducts.map((product) => (
-                <Link
-                  key={product._id}
-                  to={`/products/${product._id}`}
-                  className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 group"
-                >
-                  <div className="relative h-48 overflow-hidden">
-                    <img
-                      src={product.image.startsWith('http') ? product.image : `http://localhost:5000${product.image}`}
-                      alt={product.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      onError={(e) => { e.currentTarget.src = 'https://images.pexels.com/photos/1132047/pexels-photo-1132047.jpeg?auto=compress&cs=tinysrgb&w=400'; }}
-                    />
-                    <span className="absolute top-3 left-3 bg-green-600 text-white px-2 py-1 rounded-full text-xs font-medium">
-                      {product.category}
-                    </span>
-                  </div>
-                  <div className="p-4">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{product.name}</h3>
-                    <p className="text-gray-600 text-sm mb-2 line-clamp-2">{product.description}</p>
-                    <div className="flex justify-between items-center">
-                      <span className="text-xl font-bold text-green-600">${product.price}/{product.unit}</span>
-                      <span className="text-xs text-gray-500">{product.availableQuantity} {product.unit} left</span>
-                    </div>
-                  </div>
-                </Link>
-              ))
-            )}
-          </div>
-          <div className="text-center mt-10">
-            <Link
-              to="/products"
-              className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg text-lg font-medium transition-colors duration-300 inline-flex items-center"
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ x: -100, opacity: 0 }}
+              whileInView={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.8 }}
             >
-              View All Products
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
+              <img
+                src="https://images.pexels.com/photos/1595104/pexels-photo-1595104.jpeg?auto=compress&cs=tinysrgb&w=800"
+                alt="Sri Lankan Agriculture"
+                className="rounded-2xl shadow-2xl w-full h-96 object-cover"
+              />
+            </motion.div>
+            
+            <motion.div
+              initial={{ x: 100, opacity: 0 }}
+              whileInView={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                EXTENDING ROOTS
+              </h2>
+              
+              <div className="w-16 h-1 bg-green-500 mb-8"></div>
+              
+              <div className="space-y-6 text-gray-700 text-lg leading-relaxed">
+                <p>
+                  Established in 2008, KS AGRI has transformed over the years to become a renowned and 
+                  trusted source of fresh tropical fruits and vegetables from the pearl of the Indian Ocean.
+                </p>
+                
+                <p>
+                  We are proudly one of the leading exporters of cassava, papaya, king coconut, and fresh coconuts 
+                  in Sri Lanka, and our commitment to sustainable farming practices is a fitting testament of our 
+                  dedication to superior quality.
+                </p>
+                
+                <p>
+                  We support the livelihoods of a large community of farmers both directly and indirectly, 
+                  and together we strive towards extending our roots in the global agricultural industry.
+                </p>
+                
+                <p className="font-semibold text-green-600">
+                  And we haven't stopped... the journey for excellence continues!
+                </p>
+              </div>
+              
+              <button className="mt-8 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300">
+                READ MORE
+              </button>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Testimonials */}
+      {/* Why Choose Us Section - Feature Blocks like CR Exports */}
       <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Client Testimonials</h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Hear from our global partners about their experience with us.
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ y: 50, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8 }}
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              YES! WE RANK HIGH!
+            </h2>
+            <div className="w-16 h-1 bg-green-500 mx-auto mb-6"></div>
+            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
+              We are among the leading exporters of tropical fruits & vegetables in Sri Lanka because our productivity is high!
             </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {testimonials.map((testimonial, index) => (
-              <div key={index} className="bg-white p-5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
-                <div className="flex mb-3">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />
-                  ))}
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                icon: Shield,
+                title: "Freshness Guaranteed",
+                description: "The produce we supply undergoes a strict quality assurance check by our trained staff to safeguard optimum freshness."
+              },
+              {
+                icon: Clock,
+                title: "On-time Delivery",
+                description: "We understand that our buyers needs can be time-critical and so we have invested in the right tools to enable a quick turnaround of orders."
+              },
+              {
+                icon: Award,
+                title: "Industry Expertise",
+                description: "We have gained over 16 years of industry experience and this gives us a competitive edge in the market."
+              },
+              {
+                icon: Users,
+                title: "Farmer Networks",
+                description: "We liaise closely with a vast network of farmers to meet the highest standards while supporting their livelihoods."
+              },
+              {
+                icon: Check,
+                title: "Quality Standards",
+                description: "We are in compliance with international quality standards, which are fitting testaments to our continued commitment to quality."
+              },
+              {
+                icon: Factory,
+                title: "Updated Facilities",
+                description: "From cool rooms to refrigerated transport, we have all the updated facilities that safeguard freshness."
+              }
+            ].map((feature, index) => (
+              <motion.div
+                key={index}
+                className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
+                initial={{ y: 50, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+              >
+                <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto">
+                  <feature.icon className="w-8 h-8 text-green-600" />
                 </div>
-                <p className="text-gray-600 text-sm mb-3 italic">"{testimonial.content}"</p>
-                <div className="border-t pt-3">
-                  <div className="font-semibold text-gray-900">{testimonial.name}</div>
-                  <div className="text-xs text-gray-500">{testimonial.company}</div>
-                  <div className="text-xs text-green-600">{testimonial.country}</div>
-                </div>
-              </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-4 text-center uppercase tracking-wide">
+                  {feature.title}
+                </h3>
+                <p className="text-gray-600 text-center leading-relaxed">
+                  {feature.description}
+                </p>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-green-700 to-green-800 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Start Importing Today</h2>
-          <p className="text-lg mb-8 text-gray-100 max-w-2xl mx-auto">
-            Join our global network. Request a quote or register to begin.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              to="/contact"
-              className="bg-white text-green-800 hover:bg-gray-100 px-6 py-3 rounded-lg text-lg font-medium transition-colors duration-300 inline-flex items-center"
-            >
-              Get a Quote
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-            <Link
-              to="/register"
-              className="border-2 border-white text-white hover:bg-white hover:text-green-800 px-6 py-3 rounded-lg text-lg font-medium transition-colors duration-300 inline-flex items-center"
-            >
-              Register Now
-            </Link>
+      {/* Products Section - Matching CR Exports categories */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ y: 50, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="flex justify-center mb-8">
+              <img
+                src="https://images.pexels.com/photos/1132047/pexels-photo-1132047.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop"
+                alt="Organic Farm"
+                className="w-32 h-32 rounded-full object-cover shadow-lg"
+              />
+            </div>
+            
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              OUR PRODUCTS
+            </h2>
+            <div className="w-16 h-1 bg-green-500 mx-auto mb-6"></div>
+            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
+              We supply a premium range of products that are listed under the below four categories.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              {
+                title: "TROPICAL FRUITS",
+                description: "From Papaya to King Coconut, we supply a premium range of tropical fruits to the export market.",
+                image: "https://images.pexels.com/photos/5945730/pexels-photo-5945730.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop"
+              },
+              {
+                title: "ROOT VEGETABLES",
+                description: "Fresh Cassava and other root vegetables are harvested and processed to meet international standards.",
+                image: "https://images.pexels.com/photos/533360/pexels-photo-533360.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop"
+              },
+              {
+                title: "COCONUT PRODUCTS",
+                description: "Premium coconuts including King Coconuts and Fresh Coconuts for global distribution.",
+                image: "https://images.pexels.com/photos/5945731/pexels-photo-5945731.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop"
+              },
+              {
+                title: "FRESH VEGETABLES",
+                description: "A variety of fresh vegetables including leafy greens and seasonal produce for export markets.",
+                image: "https://images.pexels.com/photos/1300972/pexels-photo-1300972.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop"
+              }
+            ].map((category, index) => (
+              <motion.div
+                key={index}
+                className="bg-gray-50 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
+                initial={{ y: 50, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+              >
+                <div className="h-48 overflow-hidden">
+                  <img
+                    src={category.image}
+                    alt={category.title}
+                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-lg font-bold text-gray-900 mb-3 uppercase tracking-wide">
+                    {category.title}
+                  </h3>
+                  <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+                    {category.description}
+                  </p>
+                  <button className="text-green-600 font-semibold hover:text-green-700 transition-colors duration-300 uppercase tracking-wide text-sm">
+                    Browse →
+                  </button>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
+
+      {/* Footer/Contact Preview - CR Exports Style */}
+      <footer className="bg-gray-900 text-white py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Company Info */}
+            <motion.div
+              initial={{ y: 50, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center">
+                  <span className="text-white font-bold text-lg">KS</span>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold">KS AGRI (PVT) LTD</h3>
+                  <p className="text-gray-400 text-sm uppercase tracking-wider">Premium Agricultural Exports</p>
+                </div>
+              </div>
+              <p className="text-gray-300 leading-relaxed">
+                KS AGRI (Pvt) Ltd is a leading exporter of premium quality tropical fruits and vegetables, 
+                supporting farmers and delivering excellence to global markets.
+              </p>
+            </motion.div>
+
+            {/* Contact Information */}
+            <motion.div
+              initial={{ y: 50, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <h4 className="text-lg font-semibold mb-6 uppercase tracking-wide">Contact Information</h4>
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <MapPin className="w-5 h-5 text-green-500 mt-1 flex-shrink-0" />
+                  <div>
+                    <p className="text-gray-300">No. 123, Export Avenue,</p>
+                    <p className="text-gray-300">Ratnapura, Sri Lanka</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Phone className="w-5 h-5 text-green-500" />
+                  <span className="text-gray-300">+94 11 234 5678</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Mail className="w-5 h-5 text-green-500" />
+                  <span className="text-gray-300">info@ksagri.lk</span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Quick Links */}
+            <motion.div
+              initial={{ y: 50, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              <h4 className="text-lg font-semibold mb-6 uppercase tracking-wide">Quick Links</h4>
+              <div className="space-y-3">
+                {['About Us', 'Our Products', 'Quality Standards', 'Contact Us', 'Export Guidelines'].map((link, index) => (
+                  <a 
+                    key={index}
+                    href="#" 
+                    className="block text-gray-300 hover:text-green-400 transition-colors duration-300"
+                  >
+                    {link}
+                  </a>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Bottom Bar */}
+          <div className="border-t border-gray-800 pt-8 mt-8 text-center">
+            <p className="text-gray-400">
+              © 2024 KS AGRI (Pvt) Ltd. All rights reserved. | Premium Agricultural Exports from Sri Lanka
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
 
-export default HomePage;
+export default KSAgriHomepage;

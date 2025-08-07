@@ -96,8 +96,7 @@ export const ParallaxBackground = () => {
       ref={ref}
       style={{ 
         y, 
-        opacity,
-        backgroundImage: `url('https://images.pexels.com/photos/1595104/pexels-photo-1595104.jpeg?auto=compress&cs=tinysrgb&w=1600')`
+        opacity
       }}
       className="absolute inset-0 bg-cover bg-center"
     />

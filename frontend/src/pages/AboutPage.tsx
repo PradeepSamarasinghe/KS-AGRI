@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Users, Target, Award, Globe, Leaf, Heart, Truck, Shield } from 'lucide-react';
 import pradeepImage from '../assets/images/my.jpeg';
 import TharakaImage from '../assets/images/my1.jpeg';
+import backgroundImg from '../assets/images/Background.jpg'
 import {
   FloatingCard,
   RotatingIcon,
@@ -67,9 +68,14 @@ const AboutPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans pt-24">
+    <div 
+      className="min-h-screen font-sans pt-24 bg-cover bg-center bg-fixed"
+      style={{
+        backgroundImage: `url(${backgroundImg})`
+      }}
+    >
       {/* Hero Section with 3D Parallax */}
-      <section className="relative py-16 bg-gradient-to-r from-green-800 to-green-600 text-white overflow-hidden">
+      <section className="relative py-16 text-white overflow-hidden">
         <ParallaxBackground />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div 
