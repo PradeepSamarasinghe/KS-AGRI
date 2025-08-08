@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Star, Truck, Shield, Award, Calendar, Clock, Package } from 'lucide-react';
 import api from '../services/api';
+import backgroundImg from '../assets/images/Background.jpg'
 
 interface Product {
   _id: string;
@@ -199,7 +200,7 @@ const ProductDetail = () => {
             )}
 
             {/* Packaging Options */}
-            {product.packaging && product.packagingOptions.length > 0 && (
+            {product.packagingOptions.length > 0 && (
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-3 flex items-center">
                   <Package className="h-5 w-5 mr-2" />

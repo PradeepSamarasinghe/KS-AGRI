@@ -84,16 +84,17 @@ const KSAgriHomepage = () => {
       
       {/* Hero Section */}
       <section 
-        className="relative h-screen bg-cover bg-center bg-fixed flex items-center"
+        className="relative h-screen bg-cover bg-center bg-fixed flex items-center "
         style={{
           backgroundImage: `url(${images[currentImage]})`
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/60"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/60" style={{marginTop: 0, padding: 0}}></div>
         
         <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
           {/* Company Logo */}
           <motion.div 
+
             className="mb-8 pt-20"
             initial={{ y: -50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}

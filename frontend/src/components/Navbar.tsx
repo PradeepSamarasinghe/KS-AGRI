@@ -58,7 +58,7 @@ const Navbar = () => {
         }`}
         style={{
           backgroundImage: 'none',
-          backgroundColor: 'rgba(0, 0, 0, 0.8)'
+          backgroundColor: 'rgba(0, 0, 0, 0.5)'
         }}
       >
         <div className="container mx-auto px-4">
