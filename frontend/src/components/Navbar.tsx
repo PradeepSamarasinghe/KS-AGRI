@@ -212,22 +212,7 @@ const Navbar = () => {
                     </div>
                   )}
                 </div>
-              ) : (
-                <div className="flex items-center space-x-6">
-                  <Link
-                    to="/login"
-                    className="text-white hover:text-teal-400 transition-all duration-300 text-lg font-medium italic"
-                  >
-                    Login
-                  </Link>
-                  <Link
-                    to="/register"
-                    className="bg-teal-500 hover:bg-teal-600 text-white px-6 py-2 rounded-lg font-medium transition-all duration-300"
-                  >
-                    Register
-                  </Link>
-                </div>
-              )}
+               ) : null}
             </nav>
 
             {/* Mobile Menu Button */}
@@ -330,24 +315,7 @@ const Navbar = () => {
                       Sign Out
                     </button>
                   </div>
-                ) : (
-                  <div className="space-y-2">
-                    <Link
-                      to="/login"
-                      className="block text-center px-3 py-2 rounded-lg font-medium text-white hover:text-green-400 transition-colors"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      LOGIN
-                    </Link>
-                    <Link
-                      to="/register"
-                      className="block text-center bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg font-medium transition-colors"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      REGISTER
-                    </Link>
-                  </div>
-                )}
+                ) : null}
               </div>
 
               {/* Mobile Social Media */}
