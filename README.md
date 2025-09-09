@@ -51,3 +51,10 @@ npm install
 npm run dev
 ```
 
+
+
+# 📫 Contact 
+💼 LinkedIn: [linkedin.com/in/pradeep-samarasinghe-4b66912a1 ](https://www.linkedin.com/in/pradeep-samarasinghe/)
+
+✉️ Email: samarasinghepradeep242@gmail.com
+
