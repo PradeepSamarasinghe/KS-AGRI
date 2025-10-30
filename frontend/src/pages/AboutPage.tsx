@@ -1,8 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Users, Target, Award, Globe, Leaf, Heart, Truck, Shield } from 'lucide-react';
-import pradeepImage from '../assets/images/my.jpeg';
-import TharakaImage from '../assets/images/my1.jpeg';
+import pradeepImage from '../assets/images/person.png';
+import TharakaImage from '../assets/images/person.png';
 import backgroundImg from '../assets/images/Background.jpg'
 import {
   FloatingCard,
@@ -64,6 +64,7 @@ const AboutPage = () => {
       name: 'Rajesh Fernando',
       position: 'Export Operations Manager',
       description: 'Rajesh manages our global logistics network, ensuring timely and safe delivery to customers worldwide.',
+      image: TharakaImage
     }
   ];
 

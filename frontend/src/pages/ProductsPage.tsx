@@ -30,7 +30,7 @@ const ProductsPage = () => {
     { name: 'other', display: 'Other Products' }
   ];
 
-  // Hardcoded products based on crexports.lk structure
+  
   const products = [
     // Fruits
     {
@@ -42,7 +42,7 @@ const ProductsPage = () => {
       availableQuantity: 5000,
       category: 'fruits',
       seasonal: 'J F M A M J J A S O N D',
-      image: 'https://images.pexels.com/photos/1435735/pexels-photo-1435735.jpeg?auto=compress&cs=tinysrgb&w=800'
+      image: 'https://th.bing.com/th/id/OIP.YNsDvf1OFUfDaWCc4gvHTwHaHa?o=7&cb=12rm=3&rs=1&pid=ImgDetMain&o=7&rm=3'
     },
     {
       _id: '2',
@@ -53,7 +53,7 @@ const ProductsPage = () => {
       availableQuantity: 3000,
       category: 'fruits',
       seasonal: 'J F M A M J J A S O N D',
-      image: 'https://images.pexels.com/photos/1058020/pexels-photo-1058020.jpeg?auto=compress&cs=tinysrgb&w=800'
+      image: 'https://tse4.mm.bing.net/th/id/OIP.uv4eQLT9PjUJIx90P2qxFwHaHa?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3'
     },
     {
       _id: '3',
@@ -64,7 +64,7 @@ const ProductsPage = () => {
       availableQuantity: 2000,
       category: 'fruits',
       seasonal: 'M A M J J A',
-      image: 'https://images.pexels.com/photos/161559/pexels-photo-161559.jpeg?auto=compress&cs=tinysrgb&w=800'
+      image: 'https://tse4.mm.bing.net/th/id/OIP.U28FwP_bifnXLTmcBJDr6wHaGF?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3'
     },
     {
       _id: '4',
@@ -75,7 +75,7 @@ const ProductsPage = () => {
       availableQuantity: 4000,
       category: 'fruits',
       seasonal: 'J F M A M J J A S O N D',
-      image: 'https://images.pexels.com/photos/5945669/pexels-photo-5945669.jpeg?auto=compress&cs=tinysrgb&w=800'
+      image: 'https://tse1.mm.bing.net/th/id/OIP.i5KCfE3NVBmm1f7P_bkztQHaF4?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3'
     },
     {
       _id: '5',
@@ -86,7 +86,7 @@ const ProductsPage = () => {
       availableQuantity: 1500,
       category: 'fruits',
       seasonal: 'A M J J A S',
-      image: 'https://images.pexels.com/photos/557439/pexels-photo-557439.jpeg?auto=compress&cs=tinysrgb&w=800'
+      image: 'https://tse4.mm.bing.net/th/id/OIP.9dc86Zpk_bNZv26e6UCrrQHaGg?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3'
     },
     {
       _id: '7',
@@ -97,7 +97,7 @@ const ProductsPage = () => {
       availableQuantity: 2500,
       category: 'fruits',
       seasonal: 'M J J A S O',
-      image: 'https://images.pexels.com/photos/5945669/pexels-photo-5945669.jpeg?auto=compress&cs=tinysrgb&w=800'
+      image: 'https://tse1.mm.bing.net/th/id/OIP.ID1nXTIZYlulBaOSq7B2gAHaE8?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3'
     },
     // Coconut Products
     {
@@ -109,7 +109,7 @@ const ProductsPage = () => {
       availableQuantity: 10000,
       category: 'coconut-products',
       seasonal: 'J F M A M J J A S O N D',
-      image: 'https://images.pexels.com/photos/1585369/pexels-photo-1585369.jpeg?auto=compress&cs=tinysrgb&w=800'
+      image: 'https://quickee.com/wp-content/uploads/2022/10/13.-king-coconut.jpg'
     },
     // Vegetables
     {
@@ -121,7 +121,7 @@ const ProductsPage = () => {
       availableQuantity: 6000,
       category: 'vegetables',
       seasonal: 'J F M A S O N D',
-      image: 'https://images.pexels.com/photos/751236/pexels-photo-751236.jpeg?auto=compress&cs=tinysrgb&w=800'
+      image: 'https://tse4.mm.bing.net/th/id/OIP.yXhNjVM7gIbAmRx9WyBYewHaFq?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3'
     },
     {
       _id: '9',
@@ -132,7 +132,7 @@ const ProductsPage = () => {
       availableQuantity: 4000,
       category: 'vegetables',
       seasonal: 'F M A M J J A S',
-      image: 'https://images.pexels.com/photos/321551/pexels-photo-321551.jpeg?auto=compress&cs=tinysrgb&w=800'
+      image: 'https://th.bing.com/th/id/R.fa492c5c6bbe3aaae84994c2c006161b?rik=MK0YvoXgr6tNrg&riu=http%3a%2f%2fwww.sahajaaharam.com%2ffiles%2f313.png&ehk=9cqh0H92iHYW70LMWiorYwd0k4gMyDtDFQKbFTuomb4%3d&risl=&pid=ImgRaw&r=0'
     },
     {
       _id: '10',
@@ -143,7 +143,7 @@ const ProductsPage = () => {
       availableQuantity: 8000,
       category: 'vegetables',
       seasonal: 'J F M A M J J A S O N D',
-      image: 'https://images.pexels.com/photos/2329440/pexels-photo-2329440.jpeg?auto=compress&cs=tinysrgb&w=800'
+      image: 'https://tse3.mm.bing.net/th/id/OIP.VKG1qNp4bQnOTWVzO1DJiwHaEo?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3'
     }
   ];
 

@@ -4,7 +4,7 @@ import { MapPin, Phone, Mail, Clock, Send, CheckCircle } from 'lucide-react';
 import backgroundImg from '../assets/images/Background.jpg';
 
 // 3D Animation Components (inline versions)
-const FloatingCard = ({ children, delay = 0, className = "" }) => {
+const FloatingCard: React.FC<{ children?: React.ReactNode; delay?: number; className?: string }> = ({ children, delay = 0, className = "" }) => {
   return (
     <motion.div
       initial={{ y: 50, opacity: 0 }}

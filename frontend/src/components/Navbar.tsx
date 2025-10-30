@@ -73,14 +73,14 @@ const Navbar = () => {
               <div className="text-white/60">|</div>
               <div className="flex items-center space-x-1">
                 <Phone size={12} />
-                <span>+94 77 768 1727</span>
+                <span>+94 77 942 3524</span>
               </div>
             </div>
 
             {/* Email */}
             <div className="flex items-center space-x-1">
               <Mail size={12} />
-              <span>ksgroup@sltnet.lk</span>
+              <span>ksagri74@gmail.com</span>
             </div>
 
             {/* Social Media Icons */}
@@ -240,7 +240,7 @@ const Navbar = () => {
                   </div>
                   <div className="flex items-center space-x-2">
                     <Mail size={14} />
-                    <span>ksgroup@sltnet.lk</span>
+                    <span>ksagri74@gmail.com</span>
                   </div>
                 </div>
               </div>

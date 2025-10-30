@@ -76,8 +76,9 @@ const KSAgriHomepage = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const goToNext = () => setCurrentImage((prev) => (prev + 1) % images.length);
-  const goToPrev = () => setCurrentImage((prev) => (prev - 1 + images.length) % images.length);
+const goToNext = () => setCurrentImage((prev) => (prev + 1) % images.length);
+const goToPrev = () => setCurrentImage((prev) => (prev - 1 + images.length) % images.length);
+
 
   return (
     <div className="min-h-screen bg-white overflow-x-hidden">
@@ -333,7 +334,7 @@ const KSAgriHomepage = () => {
               {
                 title: "TROPICAL FRUITS",
                 description: "From Papaya to King Coconut, we supply a premium range of tropical fruits to the export market.",
-                image: "https://images.pexels.com/photos/5945730/pexels-photo-5945730.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop"
+                image: "https://th.bing.com/th/id/R.e93c7dc87b75d772cccae6e7abfa4390?rik=aC%2fO2TsNeWdrLA&pid=ImgRaw&r=0"
               },
               {
                 title: "ROOT VEGETABLES",
@@ -343,7 +344,7 @@ const KSAgriHomepage = () => {
               {
                 title: "COCONUT PRODUCTS",
                 description: "Premium coconuts including King Coconuts and Fresh Coconuts for global distribution.",
-                image: "https://images.pexels.com/photos/5945731/pexels-photo-5945731.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop"
+                image: "https://th.bing.com/th/id/OIP.SnYZ3bXDAr5-d6Vm7EA17wHaDu?o=7&cb=12rm=3&rs=1&pid=ImgDetMain&o=7&rm=3"
               },
               {
                 title: "FRESH VEGETABLES",
@@ -382,86 +383,6 @@ const KSAgriHomepage = () => {
         </div>
       </section>
 
-      {/* Footer/Contact Preview - CR Exports Style */}
-      <footer className="bg-gray-900 text-white py-16">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Company Info */}
-            <motion.div
-              initial={{ y: 50, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.8 }}
-            >
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center">
-                  <span className="text-white font-bold text-lg">KS</span>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold">KS AGRI (PVT) LTD</h3>
-                  <p className="text-gray-400 text-sm uppercase tracking-wider">Premium Agricultural Exports</p>
-                </div>
-              </div>
-              <p className="text-gray-300 leading-relaxed">
-                KS AGRI (Pvt) Ltd is a leading exporter of premium quality tropical fruits and vegetables, 
-                supporting farmers and delivering excellence to global markets.
-              </p>
-            </motion.div>
-
-            {/* Contact Information */}
-            <motion.div
-              initial={{ y: 50, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              <h4 className="text-lg font-semibold mb-6 uppercase tracking-wide">Contact Information</h4>
-              <div className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <MapPin className="w-5 h-5 text-green-500 mt-1 flex-shrink-0" />
-                  <div>
-                    <p className="text-gray-300">No. 123, Export Avenue,</p>
-                    <p className="text-gray-300">Ratnapura, Sri Lanka</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Phone className="w-5 h-5 text-green-500" />
-                  <span className="text-gray-300">+94 11 234 5678</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Mail className="w-5 h-5 text-green-500" />
-                  <span className="text-gray-300">info@ksagri.lk</span>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Quick Links */}
-            <motion.div
-              initial={{ y: 50, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-            >
-              <h4 className="text-lg font-semibold mb-6 uppercase tracking-wide">Quick Links</h4>
-              <div className="space-y-3">
-                {['About Us', 'Our Products', 'Quality Standards', 'Contact Us', 'Export Guidelines'].map((link, index) => (
-                  <a 
-                    key={index}
-                    href="#" 
-                    className="block text-gray-300 hover:text-green-400 transition-colors duration-300"
-                  >
-                    {link}
-                  </a>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Bottom Bar */}
-          <div className="border-t border-gray-800 pt-8 mt-8 text-center">
-            <p className="text-gray-400">
-              © 2024 KS AGRI (Pvt) Ltd. All rights reserved. | Premium Agricultural Exports from Sri Lanka
-            </p>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 };

@@ -408,14 +408,16 @@ const ProfilePage = () => {
                   <div>
                     <span className="font-medium text-gray-700">Member Since:</span>
                     <span className="ml-2 text-gray-600">
-                      {new Date(user.createdAt || '').toLocaleDateString()}
+                      {((user as any).createdAt || (user as any).created_at)
+                        ? new Date(((user as any).createdAt || (user as any).created_at)).toLocaleDateString()
+                        : 'N/A'}
                     </span>
                   </div>
                   <div>
                     <span className="font-medium text-gray-700">Last Login:</span>
-                    <span className="ml-2 text-gray-600">
+                    {/* <span className="ml-2 text-gray-600">
                       {user.lastLogin ? new Date(user.lastLogin).toLocaleDateString() : 'N/A'}
-                    </span>
+                    </span> */}
                   </div>
                 </div>
               </div>
